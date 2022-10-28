@@ -1,7 +1,7 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_render.h"
 #include <memory>
 
 #include "appdata.hpp"
@@ -23,7 +23,6 @@ public:
 
   void ProcessEvent();
   void ClearBackground() const;
-  void Update();
   void Render() const;
   void InitBackingRect(Vec2f startPos, Vec2f dim);
 };

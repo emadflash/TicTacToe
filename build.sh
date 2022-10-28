@@ -9,7 +9,7 @@ set -eu
 TARGET_DIR="target"
 BIN="tictactoe"
 CFLAGS="$CFLAGS -std=c++17 -I./include -I./src/headers"
-LDFLAGS="$LDFLAGS -lm $(sdl2-config --libs)"
+LDFLAGS="$LDFLAGS -lm ./lib/libSDL2.so"
 SOURCES="src/*.cpp"
 
 panic() {
@@ -35,6 +35,7 @@ build() {
         panic "Build mode unsupported!"
     esac
 
+    create_target_dir
     set -x
     $CC $CFLAGS $EXTRAFLAGS $LDFLAGS $SOURCES -o $TARGET_DIR/$BIN
     set +x

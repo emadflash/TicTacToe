@@ -2,8 +2,9 @@
 #include "headers/appdata.hpp"
 #include "headers/common.hpp"
 
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_render.h>
+#include "SDL2/SDL_events.h"
+#include "SDL2/SDL_render.h"
+
 #include <memory>
 
 Platform::Platform(const char *title, int width, int height)
@@ -16,14 +17,14 @@ Platform::Platform(const char *title, int width, int height)
 
   window = SDL_CreateWindow(title, -1, -1, width, height, SDL_WINDOW_RESIZABLE);
   if (!window) {
-    ERR("Couldn't create SDL Window, SDL Error:", SDL_GetError());
+    ERR("Couldn't create SDL_Window, SDL Error:", SDL_GetError());
     isRunning = false;
     return;
   }
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (!renderer) {
-    ERR("Couldn't create SDL Render, SDL Error:", SDL_GetError());
+    ERR("Couldn't create SDL_Renderer, SDL Error:", SDL_GetError());
     isRunning = false;
     return;
   }
@@ -70,9 +71,6 @@ void Platform::ProcessEvent() {
 void Platform::ClearBackground() const {
   SDL_SetRenderDrawColor(renderer, 0x02, 0x00, 0x14, 0x00);
   SDL_RenderClear(renderer);
-}
-
-void Platform::Update() {
 }
 
 void Platform::Render() const {

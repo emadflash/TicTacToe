@@ -1,12 +1,12 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
+
 #include <memory>
 #include <unordered_map>
 #include <vector>
 
 #include "grid.hpp"
-#include "player.hpp"
 
 class Game {
 public:
@@ -28,7 +28,8 @@ public:
 
 private:
   Vec2<int> clickPos;
-  bool hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId);
+
   void initGameState();
+  bool hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId);
   void reset();
 };

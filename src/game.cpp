@@ -2,7 +2,19 @@
 #include "headers/common.hpp"
 #include "headers/platform.hpp"
 
-#include <SDL2/SDL_mouse.h>
+void Game::initGameState() {
+  playerTurn = 0;
+  isOver = isDraw = false;
+}
+
+void Game::reset() {
+  initGameState();
+  grid.Reset();
+}
+
+void Game::Update(Platform *platform) {
+  grid.Update(platform);
+}
 
 void Game::Render(Platform *platform) const {
   grid.Render(platform, playerMap);
@@ -81,18 +93,4 @@ void Game::ProcessEvent(Platform *platform) {
     }
   } break;
   }
-}
-
-void Game::Update(Platform *platform) {
-  grid.Update(platform);
-}
-
-void Game::initGameState() {
-  playerTurn = 0;
-  isOver = isDraw = false;
-}
-
-void Game::reset() {
-  initGameState();
-  grid.Reset();
 }

@@ -1,0 +1,7 @@
+{
+    "editor.tabSize": 2,
+    "clangd.arguments": [
+        "-I./include",
+        "-I./src/headers"
+    ]
+}

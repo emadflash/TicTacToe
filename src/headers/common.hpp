@@ -78,5 +78,5 @@
   } while (0);
 #endif
 
-void report_assertion_failure(const char *prefix, const char *filename, std::size_t line_number,
-                              const char *function_name, char *cond, char *msg, ...);
+void report_assertion_failure(char const *prefix, char const *filename, std::size_t line_number,
+                              char const *function_name, char const *cond, char *msg, ...);

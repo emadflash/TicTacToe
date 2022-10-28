@@ -19,7 +19,7 @@ public:
   Uint8 playerTurn = 0;
   bool isOver{false}, isDraw{false};
 
-  explicit Game(Uint8 gridSize) : grid(Grid(gridSize, 0.10)) {}
+  explicit Game(Uint8 gridSize) : grid(Grid(gridSize, 0.10)) { initGameState(); }
   ~Game() {}
 
   void Render(Platform *platform) const;
@@ -28,5 +28,7 @@ public:
 
 private:
   Vec2<int> clickPos;
-  bool hasPlayerWon(Vec2<Uint8> cellPos, Uint8 playerId);
+  bool hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId);
+  void initGameState();
+  void reset();
 };

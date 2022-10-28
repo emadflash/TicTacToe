@@ -1,6 +1,10 @@
 #pragma once
 
+#include <cstdarg>
 #include <cstddef>
+#include <cstdio>
+#include <ctime>
+#include <string>
 
 #ifndef DEBUG_TRAP
 #define DEBUG_TRAP() __builtin_trap()
@@ -77,6 +81,20 @@
     DEBUG_TRAP();                                                                                  \
   } while (0);
 #endif
+
+#ifndef Debug
+#define DEBUG(...)
+#else
+#define DEBUG(...) write_log("DEBUG", __VA_ARGS__)
+#endif
+
+#define INFO(...) write_log("INFO", __VA_ARGS__)
+#define WARN(...) write_log("WARN", __VA_ARGS__)
+#define ERR(...) write_log("ERR", __VA_ARGS__)
+
+// Example log message
+// [ERR] This is my error message
+void write_log(char const *prefix, char const *msg, ...);
 
 void report_assertion_failure(char const *prefix, char const *filename, std::size_t line_number,
                               char const *function_name, char const *cond, char *msg, ...);

@@ -19,3 +19,12 @@ void report_assertion_failure(char const *prefix, char const *filename, std::siz
 
   fputc('\n', stderr);
 }
+
+void write_log(char const *prefix, char const *msg, ...) {
+  va_list ap;
+  va_start(ap, msg);
+  fprintf(stdout, "[%s] ", prefix);
+  vfprintf(stdout, msg, ap);
+  fputc('\n', stdout);
+  va_end(ap);
+}

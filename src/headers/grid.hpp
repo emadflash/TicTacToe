@@ -27,6 +27,7 @@ public:
   bool ContainsPosition(const Vec2<int> &clickPos) const;
   Vec2<Uint8> GetCellFromClickPosition(const Vec2<int> &clickPos);
   void FillCell(const Vec2<Uint8> &cell, Uint8 playerId);
+  void Reset();
 
 private:
   Vec2f startPos, gap;

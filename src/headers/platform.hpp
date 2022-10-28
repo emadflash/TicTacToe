@@ -16,6 +16,7 @@ public:
   SDL_Event event;
   SDL_Rect backingRect;
   std::unique_ptr<AppData> appdata;
+  bool lCtrlPressed;
 
   Platform(const char *title, int width, int height);
   ~Platform();

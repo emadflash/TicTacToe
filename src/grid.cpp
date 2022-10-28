@@ -40,6 +40,15 @@ void Grid::Update(Platform *platform) {
   updateMeasurements(platform);
 }
 
+void Grid::Reset() {
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      cells[i][j] = -1;
+    }
+  }
+  filled_cells = 0;
+}
+
 bool Grid::ContainsPosition(const Vec2<int> &clickPos) const {
   return bool(clickPos.x >= startPos.x && clickPos.x <= startPos.x + gridWidth &&
               clickPos.y >= startPos.y && clickPos.y <= startPos.y + gridHeight);

@@ -3,11 +3,8 @@
 #include "headers/platform.hpp"
 #include "headers/rgba.hpp"
 
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
-
-#include <cstdint>
-#include <iostream>
+#include "SDL2/SDL_render.h"
+#include "SDL2/SDL_stdinc.h"
 
 void Grid::updateMeasurements(Platform *platform) {
   // NOTE(madflash) - Grid Region

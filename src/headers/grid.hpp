@@ -2,10 +2,12 @@
 
 #include "SDL2/SDL.h"
 
-#include "platform.hpp"
 #include "player.hpp"
+#include "sdl_data.hpp"
 #include "rgba.hpp"
 #include "vec.hpp"
+
+#include <array>
 
 class Grid {
 public:
@@ -22,8 +24,8 @@ public:
   }
 
   inline bool IsFull() const { return bool(filled_cells == size * size); }
-  void Update(Platform *platform);
-  void Render(Platform *platform, std::array<Rgba, 2> playerMap) const;
+  void Update(const SDL_Data &sdl);
+  void Render(SDL_Data &sdl , std::array<Rgba, 2> playerMap)const;
   bool ContainsPosition(const Vec2<int> &clickPos) const;
   Vec2<Uint8> GetCellFromClickPosition(const Vec2<int> &clickPos);
   void FillCell(const Vec2<Uint8> &cell, Uint8 playerId);
@@ -34,7 +36,7 @@ private:
   float gridWidth, gridHeight;
   Uint8 filled_cells = 0;
 
-  void updateMeasurements(Platform *platform);
-  void drawCell(Platform *platform, Vec2f pos, Vec2f dim, Rgba cell_color) const;
-  void renderCells(Platform *platform, std::array<Rgba, 2> playerMap) const;
+  void updateMeasurements(const SDL_Data &sdl);
+  void drawCell(SDL_Data &sdl, Vec2f pos, Vec2f dim, Rgba cell_color) const;
+  void renderCells(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const;
 };

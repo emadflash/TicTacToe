@@ -1,12 +1,12 @@
 #include "headers/grid.hpp"
 #include "headers/common.hpp"
-#include "headers/platform.hpp"
 #include "headers/rgba.hpp"
+#include "headers/sdl_data.hpp"
 
 #include "SDL2/SDL_render.h"
 #include "SDL2/SDL_stdinc.h"
 
-void Grid::updateMeasurements(Platform *platform) {
+void Grid::updateMeasurements(const SDL_Data &sdl) {
   // NOTE(madflash) - Grid Region
   // ______________
   // | __________ |
@@ -22,10 +22,10 @@ void Grid::updateMeasurements(Platform *platform) {
 
   // 10% padding from left/right
   // 20% padding from top/bottom
-  startPos = Vec2f(platform->windowWidth * 0.10, platform->windowHeight * 0.20);
+  startPos = Vec2f(sdl.m_windowDim.x * 0.10, sdl.m_windowDim.y * 0.20);
 
-  float regionWidth = (platform->windowWidth * 0.60);   // width without padding
-  float regionHeight = (platform->windowHeight * 0.60); // height without padding
+  float regionWidth = (sdl.m_windowDim.x * 0.60);  // width without padding
+  float regionHeight = (sdl.m_windowDim.y * 0.60); // height without padding
 
   gridWidth = regionWidth - (regionWidth * 0.20);    // with padding
   gridHeight = regionHeight - (regionHeight * 0.20); // with padding
@@ -33,8 +33,8 @@ void Grid::updateMeasurements(Platform *platform) {
   gap = Vec2f(gridWidth / 3, gridHeight / 3);
 }
 
-void Grid::Update(Platform *platform) {
-  updateMeasurements(platform);
+void Grid::Update(const SDL_Data &sdl) {
+  updateMeasurements(sdl);
 }
 
 void Grid::Reset() {
@@ -85,18 +85,17 @@ void Grid::FillCell(const Vec2<Uint8> &cell, Uint8 playerId) {
 }
 
 // Applies padding and then draws the cell
-void Grid::drawCell(Platform *platform, Vec2f pos, Vec2f dim, Rgba cell_color) const {
+void Grid::drawCell(SDL_Data &sdl, Vec2f pos, Vec2f dim, Rgba cell_color) const {
   pos.x = pos.x + dim.x * cellPadding;
   pos.y = pos.y + dim.y * cellPadding;
 
-  platform->InitBackingRect(
-      pos, Vec2f(dim.x - (dim.x * 2 * cellPadding), dim.y - (dim.y * 2 * cellPadding)));
-  SDL_SetRenderDrawColor(platform->renderer, cell_color.x, cell_color.y, cell_color.z,
-                         cell_color.a);
-  SDL_RenderFillRect(platform->renderer, &platform->backingRect);
+  sdl.InitBackingRect(pos,
+                      Vec2f(dim.x - (dim.x * 2 * cellPadding), dim.y - (dim.y * 2 * cellPadding)));
+  SDL_SetRenderDrawColor(sdl.m_renderer, cell_color.x, cell_color.y, cell_color.z, cell_color.a);
+  SDL_RenderFillRect(sdl.m_renderer, &sdl.m_backingRect);
 }
 
-void Grid::renderCells(Platform *platform, std::array<Rgba, 2> playerMap) const {
+void Grid::renderCells(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const {
   for (Uint8 i = 1; i < 4; ++i) {
     for (Uint8 j = 1; j < 4; ++j) {
       auto id = cells[i - 1][j - 1];
@@ -104,23 +103,21 @@ void Grid::renderCells(Platform *platform, std::array<Rgba, 2> playerMap) const 
         Vec2f pos(startPos.x + j * gap.x, startPos.y + i * gap.y);
         Vec2f dim(pos.x - (pos.x + gap.x), pos.y - (pos.y + gap.y));
 
-        drawCell(platform, pos, dim, playerMap[id]);
+        drawCell(sdl, pos, dim, playerMap[id]);
       }
     }
   }
 }
 
-void Grid::Render(Platform *platform, std::array<Rgba, 2> playerMap) const {
-  SDL_SetRenderDrawColor(platform->renderer, 0xff, 0xff, 0xff, 0x00);
+void Grid::Render(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const {
+  SDL_SetRenderDrawColor(sdl.m_renderer, 0xff, 0xff, 0xff, 0x00);
 
   for (int i = 1; i < size; ++i) {
-    SDL_RenderDrawLine(platform->renderer, startPos.x, startPos.y + i * gap.y,
-                       startPos.x + gridWidth,
+    SDL_RenderDrawLine(sdl.m_renderer, startPos.x, startPos.y + i * gap.y, startPos.x + gridWidth,
                        startPos.y + i * gap.y); // horizontonal line
-    SDL_RenderDrawLine(platform->renderer, startPos.x + i * gap.x, startPos.y,
-                       startPos.x + i * gap.x,
+    SDL_RenderDrawLine(sdl.m_renderer, startPos.x + i * gap.x, startPos.y, startPos.x + i * gap.x,
                        startPos.y + gridHeight); // vertical line
   }
 
-  renderCells(platform, playerMap);
+  renderCells(sdl, playerMap);
 }

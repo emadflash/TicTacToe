@@ -16,4 +16,3 @@ public:
   bool Init(const char *title, int windowWidth, int windowHeight);
   void InitBackingRect(const Vec2f &startPos, const Vec2f &dim);
 };
-

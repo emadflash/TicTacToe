@@ -3,8 +3,8 @@
 #include "SDL2/SDL.h"
 
 #include "player.hpp"
-#include "sdl_data.hpp"
 #include "rgba.hpp"
+#include "sdl_data.hpp"
 #include "vec.hpp"
 
 #include <array>
@@ -25,7 +25,7 @@ public:
 
   inline bool IsFull() const { return bool(filled_cells == size * size); }
   void Update(const SDL_Data &sdl);
-  void Render(SDL_Data &sdl , std::array<Rgba, 2> playerMap)const;
+  void Render(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const;
   bool ContainsPosition(const Vec2<int> &clickPos) const;
   Vec2<Uint8> GetCellFromClickPosition(const Vec2<int> &clickPos);
   void FillCell(const Vec2<Uint8> &cell, Uint8 playerId);

@@ -35,6 +35,7 @@ build() {
         panic "Build mode unsupported!"
     esac
 
+    create_target_dir
     set -x
     $CC $CFLAGS $EXTRAFLAGS $LDFLAGS $SOURCES -o $TARGET_DIR/$BIN
     set +x

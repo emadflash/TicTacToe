@@ -5,6 +5,7 @@
 
 class SDL_Data {
 public:
+  std::string m_windowTitle;
   SDL_Window *m_window;
   SDL_Renderer *m_renderer;
   Vec2<int> m_windowDim;

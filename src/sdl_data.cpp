@@ -3,13 +3,19 @@
 
 bool SDL_Data::Init(const char *title, int windowWidth, int windowHeight) {
   m_windowDim = Vec2<int>(windowWidth, windowHeight);
+  m_windowTitle = std::string(title);
 
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     ERR("Couldn't initialize SDL. SDL Error: %s", SDL_GetError());
     return false;
   }
 
-  m_window = SDL_CreateWindow(title, -1, -1, m_windowDim.x, m_windowDim.y, SDL_WINDOW_RESIZABLE);
+#ifdef Debug
+  m_windowTitle += " | DEBUG MODE";
+#endif
+
+  m_window = SDL_CreateWindow(m_windowTitle.c_str(), -1, -1, m_windowDim.x, m_windowDim.y,
+                              SDL_WINDOW_RESIZABLE);
   if (!m_window) {
     ERR("Couldn't create SDL_Window, SDL Error:", SDL_GetError());
     return false;

@@ -135,7 +135,12 @@ void Game::Render() {
 }
 
 void Game::Run() {
+  Uint32 fps = 60;
+  Uint32 frameTime = 0;
+  Uint32 elapsed = 0;
+
   while (m_isRunning) {
+    elapsed = SDL_GetTicks();
     washBackground();
 
     while (SDL_PollEvent(&m_sdl.m_event)) {
@@ -144,7 +149,11 @@ void Game::Run() {
 
     Update();
     Render();
-    SDL_Delay(10);
+
+    frameTime = SDL_GetTicks() - elapsed;
+    if (1000 / fps > frameTime) {
+      SDL_Delay((1000 / fps) - frameTime);
+    }
   }
 
   SDL_Delay(20);

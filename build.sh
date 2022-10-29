@@ -18,7 +18,9 @@ panic() {
 }
 
 create_target_dir() {
-    mkdir $TARGET_DIR 2>/dev/null
+    if [[ ! -d $TARGET_DIR ]]; then
+      mkdir $TARGET_DIR 2>/dev/null
+    fi
 }
 
 build() {
@@ -35,8 +37,8 @@ build() {
         panic "Build mode unsupported!"
     esac
 
-    create_target_dir
     set -x
+    create_target_dir
     $CC $CFLAGS $EXTRAFLAGS $LDFLAGS $SOURCES -o $TARGET_DIR/$BIN
     set +x
 }

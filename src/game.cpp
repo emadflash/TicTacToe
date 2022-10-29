@@ -30,23 +30,23 @@ void Game::reset() {
 
 bool Game::hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId) {
   auto checkRow = [&]() {
-    for (int i = 0; i < m_grid.size; ++i) {
-      if (m_grid.cells[i][cellPos.y] != playerId) return false;
+    for (int i = 0; i < m_grid.m_size; ++i) {
+      if (m_grid.m_cells[i][cellPos.y] != playerId) return false;
     }
     return true;
   };
 
   auto checkCol = [&]() {
-    for (int i = 0; i < m_grid.size; ++i) {
-      if (m_grid.cells[cellPos.x][i] != playerId) return false;
+    for (int i = 0; i < m_grid.m_size; ++i) {
+      if (m_grid.m_cells[cellPos.x][i] != playerId) return false;
     }
     return true;
   };
 
   auto checkDiag = [&]() {
     if (cellPos.x == cellPos.y) {
-      for (int i = 0; i < m_grid.size; ++i) {
-        if (m_grid.cells[i][i] != playerId) return false;
+      for (int i = 0; i < m_grid.m_size; ++i) {
+        if (m_grid.m_cells[i][i] != playerId) return false;
       }
       return true;
     }
@@ -54,9 +54,9 @@ bool Game::hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId) {
   };
 
   auto checkAntiDiag = [&]() {
-    if (cellPos.x + cellPos.y == m_grid.size - 1) {
-      for (int i = 0; i < m_grid.size; ++i) {
-        if (m_grid.cells[i][m_grid.size - i - 1] != playerId) return false;
+    if (cellPos.x + cellPos.y == m_grid.m_size - 1) {
+      for (int i = 0; i < m_grid.m_size; ++i) {
+        if (m_grid.m_cells[i][m_grid.m_size - i - 1] != playerId) return false;
       }
       return true;
     }

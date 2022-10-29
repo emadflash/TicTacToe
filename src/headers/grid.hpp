@@ -11,19 +11,15 @@
 
 class Grid {
 public:
-  Uint8 size;
-  Sint8 cells[3][3];
-  float cellPadding;
+  Uint8 m_size;
+  Sint8 m_cells[3][3];
+  float m_cellPadding;
 
-  explicit Grid(Uint8 size, float cellPadding) : size(size), cellPadding(cellPadding) {
-    for (int i = 0; i < 3; ++i) {
-      for (int j = 0; j < 3; ++j) {
-        cells[i][j] = -1;
-      }
-    }
+  explicit Grid(Uint8 size, float cellPadding) : m_size(size), m_cellPadding(cellPadding) {
+    initGridState();
   }
 
-  inline bool IsFull() const { return bool(filled_cells == size * size); }
+  inline bool IsFull() const { return bool(m_filled_cells == m_size * m_size); }
   void Update(const SDL_Data &sdl);
   void Render(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const;
   bool ContainsPosition(const Vec2<int> &clickPos) const;
@@ -32,11 +28,12 @@ public:
   void Reset();
 
 private:
-  Vec2f startPos, gap;
-  float gridWidth, gridHeight;
-  Uint8 filled_cells = 0;
+  Vec2f m_startPos, m_gap;
+  float m_gridWidth, m_gridHeight;
+  Uint8 m_filled_cells = 0;
 
   void updateMeasurements(const SDL_Data &sdl);
   void drawCell(SDL_Data &sdl, Vec2f pos, Vec2f dim, Rgba cell_color) const;
   void renderCells(SDL_Data &sdl, std::array<Rgba, 2> playerMap) const;
+  void initGridState();
 };

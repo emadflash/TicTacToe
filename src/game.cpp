@@ -1,8 +1,7 @@
 #include "headers/game.hpp"
 #include "headers/common.hpp"
 
-Game::Game(const char *title, int width, int height, Uint8 gridSize)
-    : m_grid(Grid(gridSize, 0.20)) {
+Game::Game(const char *title, int width, int height) {
   if (!m_sdl.Init(title, width, height)) {
     m_isRunning = false;
     ERR("Cound't initialize sdl. Exiting...");
@@ -11,6 +10,10 @@ Game::Game(const char *title, int width, int height, Uint8 gridSize)
 
   m_isRunning = true;
   initGameState();
+
+  Vec2f pos(m_sdl.m_windowDim.x * 0.10, m_sdl.m_windowDim.y * 0.20);
+  Vec2<int> dim((m_sdl.m_windowDim.x * 0.60), (m_sdl.m_windowDim.y * 0.60));
+  m_grid = Grid(3, pos, dim, 0.20, 0.10);
   return;
 }
 
@@ -73,6 +76,7 @@ void Game::ProcessEvent() {
     switch (m_sdl.m_event.window.event) {
     case SDL_WINDOWEVENT_RESIZED: {
       SDL_GetWindowSize(m_sdl.m_window, &m_sdl.m_windowDim.x, &m_sdl.m_windowDim.y);
+      resizeGrid();
     } break;
     }
   } break;
@@ -125,8 +129,14 @@ void Game::ProcessEvent() {
   }
 }
 
+void Game::resizeGrid() {
+  Vec2<int> dim(m_sdl.m_windowDim.x * 0.60, m_sdl.m_windowDim.y * 0.60);
+  Vec2f pos(m_sdl.m_windowDim.x * 0.10, m_sdl.m_windowDim.y * 0.20);
+  m_grid.SetPos(pos);
+  m_grid.SetDim(dim);
+}
+
 void Game::Update() {
-  m_grid.Update(m_sdl);
 }
 
 void Game::Render() {

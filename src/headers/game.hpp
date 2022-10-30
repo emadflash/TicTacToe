@@ -20,7 +20,7 @@ public:
   Uint8 m_playerTurn = 0;
   bool m_isOver{false}, m_isDraw{false};
 
-  explicit Game(const char *title, int width, int height, Uint8 gridSize);
+  explicit Game(const char *title, int width, int height);
   ~Game();
 
   void Render();
@@ -36,6 +36,7 @@ private:
   void initGameState();
   bool hasPlayerWon(const Vec2<Uint8> &cellPos, const Uint8 &playerId);
   void reset();
+  void resizeGrid();
   inline void washBackground() const {
     SDL_SetRenderDrawColor(m_sdl.m_renderer, 0x02, 0x00, 0x14, 0x00);
     SDL_RenderClear(m_sdl.m_renderer);

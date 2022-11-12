@@ -1,5 +1,5 @@
-#include "headers/sdl_data.hpp"
-#include "headers/common.hpp"
+#include "sdl_data.hpp"
+#include "common.hpp"
 
 bool SDL_Data::Init(const char *title, int windowWidth, int windowHeight) {
   m_windowDim = Vec2<int>(windowWidth, windowHeight);

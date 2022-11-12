@@ -1,10 +1,10 @@
-#include "headers/grid.hpp"
-#include "headers/common.hpp"
-#include "headers/rgba.hpp"
-#include "headers/sdl_data.hpp"
+#include "grid.hpp"
+#include "common.hpp"
+#include "rgba.hpp"
+#include "sdl_data.hpp"
 
-#include "SDL2/SDL_render.h"
-#include "SDL2/SDL_stdinc.h"
+#include "SDL_render.h"
+#include "SDL_stdinc.h"
 
 void Grid::initGridState() {
   for (int i = 0; i < m_size; ++i) {

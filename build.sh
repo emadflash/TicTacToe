@@ -2,45 +2,39 @@
 
 set -eu
 
-: ${CC=clang++}
-: ${CFLAGS=}
-: ${LDFLAGS=}
-
 TARGET_DIR="target"
 BIN="tictactoe"
-CFLAGS="$CFLAGS -std=c++17 -I./include -I./src/headers"
-LDFLAGS="$LDFLAGS -lm ./lib/libSDL2.so"
-SOURCES="src/*.cpp"
 
 panic() {
     printf "%s\n" "$1"
     exit 1
 }
 
-create_target_dir() {
-    if [[ ! -d $TARGET_DIR ]]; then
-      mkdir $TARGET_DIR 2>/dev/null
+create_directory() {
+    if [[ ! -d ${TARGET_DIR} ]]; then
+      mkdir ${TARGET_DIR} 2>/dev/null
     fi
 }
 
 build() {
+    create_directory ${TARGET_DIR}
+
     case $1 in
     debug)
-        EXTRAFLAGS="-Wall -Wextra -pedantic -ggdb -DDebug"
+        create_directory "${TARGET_DIR}/debug"
+        cmake -B "${TARGET_DIR}/debug" -DCMAKE_BUILD_TYPE=Debug
+        make -C "${TARGET_DIR}/debug"
         ;;
 
     release)
-        EXTRAFLAGS="-O3 -DRelease"
+        create_directory "${TARGET_DIR}/release"
+        cmake -B "${TARGET_DIR}/release" -DCMAKE_BUILD_TYPE=Release
+        make -C "${TARGET_DIR}/debug"
         ;;
 
     *)
         panic "Build mode unsupported!"
     esac
-
-    set -x
-    create_target_dir
-    $CC $CFLAGS $EXTRAFLAGS $LDFLAGS $SOURCES -o $TARGET_DIR/$BIN
-    set +x
 }
 
 if [[ $# -eq 0 ]]; then

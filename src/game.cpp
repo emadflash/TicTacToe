@@ -1,5 +1,5 @@
-#include "headers/game.hpp"
-#include "headers/common.hpp"
+#include "game.hpp"
+#include "common.hpp"
 
 Game::Game(const char *title, int width, int height) {
   if (!m_sdl.Init(title, width, height)) {

@@ -1,4 +1,4 @@
-#include "headers/vec.hpp"
+#include "vec.hpp"
 
 template <typename T> std::ostream &operator<<(std::ostream &os, const Vec2<T> &v) {
   os << '(' << v.x << ", " << v.y << ')';

@@ -1,10 +1,10 @@
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "headers/common.hpp"
-#include "headers/game.hpp"
+#include "common.hpp"
+#include "game.hpp"
 
 int main() {
   Game game("Tic Tac Toe", 960, 640);
